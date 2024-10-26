@@ -26,10 +26,10 @@ def write_to_txt(name, boxes, txt_dir):
             f.write(f"{cls} {x_center} {y_center} {width} {height}\n")
 
 # Load the custom YOLO model
-model = YOLO("/data/ephemeral/home/jiwan/2024-Autonomous-Driving-Artificial-Intelligence-Challenge/YOLO/yolov11/runs/detect/train3/weights/best.pt")
+model = YOLO("/root/Gyeonggi-Autonomous-Driving-Center-Data-Utilization-Competition/yolov11/runs/detect/train5/weights/best.pt")
 
 # Predict on the test dataset
-results = model("/data/ephemeral/home/dataset/test/images", save=True)
+results = model("/root/dataset/test", save=True)
 
 # Directory to save the txt files
 txt_dir = "yolo_predictions"
