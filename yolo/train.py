@@ -5,6 +5,8 @@ import os
 # 모델 설정 정보
 model_configs = [
     {"yaml": "yolo11l.yaml", "weights": "ultralytics/yolo11l.pt", "save_dir": "runs/train/yolo11l"},
+    {"yaml": "yolo11m.yaml", "weights": "ultralytics/yolo11m.pt", "save_dir": "runs/train/yolo11m"},
+    {"yaml": "yolo11s.yaml", "weights": "ultralytics/yolo11s.pt", "save_dir": "runs/train/yolo11s"},
     {"yaml": "yolo11n.yaml", "weights": "ultralytics/yolo11n.pt", "save_dir": "runs/train/yolo11n"},
     {"yaml": "ultralytics/cfg/models/v10/yolov10l.yaml", "weights": "ultralytics/yolov10l.pt", "save_dir": "runs/train/yolov10l"},
     {"yaml": "ultralytics/cfg/models/v10/yolov10m.yaml", "weights": "ultralytics/yolov10m.pt", "save_dir": "runs/train/yolov10m"},
