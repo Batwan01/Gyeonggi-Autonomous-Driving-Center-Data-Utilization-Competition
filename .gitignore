@@ -124,3 +124,6 @@ work_dirs/
 *.sh~
 *.pt
 *.jpg
+*.png
+*.csv
+args.yaml
