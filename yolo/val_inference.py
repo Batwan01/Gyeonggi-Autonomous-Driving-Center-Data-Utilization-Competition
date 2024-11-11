@@ -40,8 +40,8 @@ model_folder = r"/data/ephemeral/home/Gyeonggi-Autonomous-Driving-Center-Data-Ut
 model_files = [f for f in os.listdir(model_folder) if f.endswith(".pt")]
 
 # 파일 이름에서 숫자 추출 함수
-    def extract_img_id(file_name):
-        return re.search(r'\d+', file_name).group()
+def extract_img_id(file_name):
+    return re.search(r'\d+', file_name).group()
 
 
 for model_file in model_files:
