@@ -119,6 +119,7 @@ mmdet/.mim
 work_dirs/
 runs/
 *.out
+gyeonggi_AD_competition/
 
 # Pytorch
 *.pth
