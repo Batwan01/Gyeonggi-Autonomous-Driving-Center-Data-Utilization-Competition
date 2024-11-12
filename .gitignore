@@ -126,4 +126,5 @@ work_dirs/
 *.jpg
 *.png
 *.csv
+*.out
 args.yaml
