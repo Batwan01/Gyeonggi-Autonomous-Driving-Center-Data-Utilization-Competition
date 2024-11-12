@@ -124,3 +124,10 @@ work_dirs/
 *.sh~
 *.pt
 *.jpg
+*.txt
+*.yaml
+*.png
+*.csv
+*.cache
+*.json
+*.out

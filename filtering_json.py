@@ -41,8 +41,8 @@ def process_annotations(data):
             if 5043 <= img_id <= 5092:
                 modify_truck_to_special_vehicles(item, img_id)
 
-            if 11235 <= img_id <= 12048:
-                delete_human(item, img_id)
+            # if 11235 <= img_id <= 12048:
+                # delete_human(item, img_id)
 
     return data
 
