@@ -24,7 +24,7 @@ class_mapping = {
 results_summary = []
 
 # 모델 파일들이 저장된 폴더와 test 데이터셋 input 경로, 결과 저장 폴더 설정
-model_folder = r"/data/ephemeral/home/Gyeonggi-Autonomous-Driving-Center-Data-Utilization-Competition/yolo/weights_11"
+model_folder = r"/data/ephemeral/home/Gyeonggi-Autonomous-Driving-Center-Data-Utilization-Competition/yolo/weights_14"
 # 모델 파일 목록
 model_files = [f for f in os.listdir(model_folder) if f.endswith(".pt")]
 
@@ -35,8 +35,7 @@ for model_file in model_files:
 
     # 소요 시간 측정 시작
     start_time = time.time()
-
-    torch.cuda.empty_cache()
+    
     # test 데이터셋 input 경로
     test_folder = r"/data/ephemeral/home/Gyeonggi-Autonomous-Driving-Center-Data-Utilization-Competition/yolo/test"
     model = YOLO(weight_path) # weights 경로

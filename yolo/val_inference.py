@@ -11,6 +11,8 @@ from collections import Counter
 with open(r"/data/ephemeral/home/Gyeonggi-Autonomous-Driving-Center-Data-Utilization-Competition/yolo/val_split.json", 'r') as f:
     gt = json.load(f)
 
+ap_file = open("ap_info.txt", "w", encoding="utf-8")
+
 # Ground Truth를 이미지 ID별로 정리
 gt_list = []
 for g in range(len(gt)):
@@ -35,7 +37,7 @@ class_mapping = {
 results_summary = []
 
 # 모델 파일들이 저장된 폴더와 test 데이터셋 input 경로, 결과 저장 폴더 설정
-model_folder = r"/data/ephemeral/home/Gyeonggi-Autonomous-Driving-Center-Data-Utilization-Competition/yolo/weights"
+model_folder = r"/data/ephemeral/home/Gyeonggi-Autonomous-Driving-Center-Data-Utilization-Competition/yolo/ttt"
 # 모델 파일 목록
 model_files = [f for f in os.listdir(model_folder) if f.endswith(".pt")]
 
@@ -47,7 +49,6 @@ for model_file in model_files:
     # 소요 시간 측정 시작
     start_time = time.time()
 
-    torch.cuda.empty_cache()
     # test 데이터셋 input 경로
     test_folder = r"/data/ephemeral/home/Gyeonggi-Autonomous-Driving-Center-Data-Utilization-Competition/yolo/val"
 
@@ -185,6 +186,8 @@ for model_file in model_files:
 
         ap += sum(rhoInterp) / 11
         print(f"Class '{c}' AP: {sum(rhoInterp) / 11}")
+        ap_file.write(f"Class '{c}' AP: {sum(rhoInterp) / 11}\n")
+        ap_file.write("-----------------------------------")
 
     # 평균 AP (mAP) 계산 및 출력
     mAP = ap / len(class_mapping)
@@ -196,6 +199,7 @@ for model_file in model_files:
     })
 
 # 최종 결과 요약 출력
+ap_file.close()
 print("\n=== 모델별 결과 요약 ===")
 for result in results_summary:
     print(f"모델: {result['model_file']}, 소요 시간: {result['elapsed_time']:.2f}초, mAP: {result['mAP']:.4f}")
