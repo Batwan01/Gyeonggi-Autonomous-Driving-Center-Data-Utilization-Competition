@@ -4,10 +4,10 @@ import shutil
 from tqdm import tqdm
 
 # 경로 설정
-train_json_path = '/hdd1/lim_data/2d_cctv/filtered_train_split.json'  # train_split.json 파일 경로
-val_json_path = '/hdd1/lim_data/2d_cctv/filtered_val_split.json'      # val_split.json 파일 경로
-image_folder = '/hdd1/lim_data/2d_cctv/train'               # 전체 이미지 폴더 경로
-output_folder = '/hdd1/lim_data/2d_cctv_yolo_filtered'            # YOLO 형식 데이터셋이 저장될 폴더
+train_json_path = 'filtered_train_split.json'  # train_split.json 파일 경로
+val_json_path = 'filtered_val_split.json'      # val_split.json 파일 경로
+image_folder = 'data/train'               # 전체 이미지 폴더 경로
+output_folder = 'data/2d_cctv_yolo_filtered'            # YOLO 형식 데이터셋이 저장될 폴더
 
 # 출력 폴더 생성
 train_image_folder = os.path.join(output_folder, 'train', 'images')

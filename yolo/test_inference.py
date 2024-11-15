@@ -35,7 +35,6 @@ for model_file in model_files:
 
     # 소요 시간 측정 시작
     start_time = time.time()
-    
     # test 데이터셋 input 경로
     test_folder = r"/data/ephemeral/home/Gyeonggi-Autonomous-Driving-Center-Data-Utilization-Competition/yolo/test"
     model = YOLO(weight_path) # weights 경로

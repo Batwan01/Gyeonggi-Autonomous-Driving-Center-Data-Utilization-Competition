@@ -117,6 +117,9 @@ data
 docs/modelzoo_statistics.md
 mmdet/.mim
 work_dirs/
+runs/
+gyeonggi_AD_competition/
+*.out
 
 # Pytorch
 *.pth
@@ -124,4 +127,8 @@ work_dirs/
 *.sh~
 *.pt
 *.jpg
+*.png
+*.csv
+*.out
+args.yaml
 *.json
