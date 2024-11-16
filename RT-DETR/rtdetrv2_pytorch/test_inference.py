@@ -134,11 +134,11 @@ if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-c', '--config', type=str, default="/home/hwang/leem/Gyeonggi-Autonomous-Driving-Center-Data-Utilization-Competition/RT-DETR/rtdetrv2_pytorch/configs/rtdetrv2/rtdetrv2_r34vd_dsp_1x_coco.yml", help='모델 설정 파일 경로')
-    parser.add_argument('-r', '--resume', type=str, default="/home/hwang/leem/Gyeonggi-Autonomous-Driving-Center-Data-Utilization-Competition/RT-DETR/rtdetrv2_pytorch/rtdetrv2_m_dsp_finetunning/rtdetrv2_m_dsp.pth", help='모델 가중치 파일 경로')
-    parser.add_argument('-t', '--test-folder', type=str, default="/hdd1/lim_data/2d_cctv/test", help='테스트 이미지 폴더 경로')
-    parser.add_argument('-o', '--output-path', type=str, default='./results/output.json', help='결과 저장 JSON 파일 경로')
-    parser.add_argument('-d', '--device', type=str, default='cuda:1', help='사용할 디바이스 (예: cuda:0, cpu)')
+    parser.add_argument('-c', '--config', type=str, default="./configs/rtdetrv2/rtdetrv2_r18vd_dsp_3x_coco.yml", help='모델 설정 파일 경로')
+    parser.add_argument('-r', '--resume', type=str, default="./final_weights/rtdetr_s_dsp_72.pth", help='모델 가중치 파일 경로')
+    parser.add_argument('-t', '--test-folder', type=str, default="../../yolo/test", help='테스트 이미지 폴더 경로')
+    parser.add_argument('-o', '--output-path', type=str, default='./results/rtdetr_s_dsp_72.pth', help='결과 저장 JSON 파일 경로')
+    parser.add_argument('-d', '--device', type=str, default='cuda:0', help='사용할 디바이스 (예: cuda:0, cpu)')
     parser.add_argument('--confidence-threshold', type=float, default=0.25, help='결과를 필터링할 confidence score 기준')
     args = parser.parse_args()
 
