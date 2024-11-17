@@ -8,7 +8,7 @@ import numpy as np
 from collections import Counter
 
 
-def main():
+def main(args):
     # 클래스 ID와 이름 매핑 규칙
     class_mapping = {
         1: 'bus',

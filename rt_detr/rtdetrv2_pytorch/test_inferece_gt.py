@@ -18,7 +18,7 @@ class_mapping = {
     8: 'motorcycle'
 }
 
-def inference(model, image_path, device):
+def inference(model, image_path, device, transforms):
     """
     RT-DETR 모델을 사용하여 추론
     """
@@ -89,7 +89,7 @@ def main(args):
         img_id = os.path.splitext(image_file)[0]
 
         # 추론 실행
-        labels, boxes, scores = inference(model, image_path, args.device)
+        labels, boxes, scores = inference(model, image_path, args.device, transforms)
 
         labels = labels.squeeze()
         boxes = boxes.squeeze()  
