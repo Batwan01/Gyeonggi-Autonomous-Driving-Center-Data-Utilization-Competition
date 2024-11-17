@@ -7,7 +7,7 @@ import re
 import numpy as np
 from collections import Counter
 
-def main():
+def main(args):
 
     # Ground Truth 데이터 불러오기
     with open(args.gt_path, 'r') as f:
