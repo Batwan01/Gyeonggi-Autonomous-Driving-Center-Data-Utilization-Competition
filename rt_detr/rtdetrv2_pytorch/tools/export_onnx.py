@@ -44,7 +44,7 @@ def main(args, ):
     model = Model()
 
     data = torch.rand(1, 3, 640, 640)
-    size = torch.tensor([[640, 640]])
+    size = torch.tensor([[1920, 1200]], dtype=torch.float32)
     _ = model(data, size)
 
     dynamic_axes = {
@@ -84,9 +84,9 @@ def main(args, ):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('--config', '-c', type=str, )
-    parser.add_argument('--resume', '-r', type=str, )
-    parser.add_argument('--output_file', '-o', type=str, default='model.onnx')
+    parser.add_argument('-c', '--config', type=str, default="./configs/rtdetrv2/rtdetrv2_r18vd_dsp_3x_coco.yml", help='모델 설정 파일 경로')
+    parser.add_argument('-r', '--resume', type=str, default="./final_weights/rtdetrv2_s_dsp_36.pth", help='모델 가중치 파일 경로')
+    parser.add_argument('--output_file', '-o', type=str, default='rtdetv2_s_dsp_36.onnx')
     parser.add_argument('--check',  action='store_true', default=False,)
     parser.add_argument('--simplify',  action='store_true', default=False,)
 
