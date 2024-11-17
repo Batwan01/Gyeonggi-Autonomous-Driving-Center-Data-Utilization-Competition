@@ -49,6 +49,19 @@ def inference_onnx(session, image_path, transforms):
 
 def main(args):
 
+
+    with open(args.gt_path, 'r') as f:
+        gt = json.load(f)
+
+    # Ground Truth를 이미지 ID별로 정리
+    gt_list = []
+    for g in range(len(gt)):
+        for n in range(len(gt[g]['annotations'])):
+            gt_list.append([gt[g]['images']['img_id'],
+                            gt[g]['annotations'][n]['lbl_nm'],
+                            eval(gt[g]['annotations'][n]['annotations_info'])])
+
+
     start_time = time.time()
     # ONNX 세션 초기화
     session = ort.InferenceSession(
@@ -117,7 +130,91 @@ def main(args):
     end_time = time.time()
     inference_time = end_time - start_time     
 
-    print(f"모델: {args.onnx-file}, 소요 시간: {inference_time:.2f}초")
+    # ========== mAP 계산 ==========
+    IOUThreshold = 0.5
+    pr_list = []
+    with open(args_output_path, 'r') as f:
+        pr = json.load(f)
+
+    # 예측 결과 리스트 생성
+    for p in range(len(pr)):
+        for n in range(len(pr[p]['annotations'])):
+            pr_list.append([pr[p]['images']['img_id'],
+                            pr[p]['annotations'][n]['lbl_nm'],
+                            eval(pr[p]['annotations'][n]['annotations_info']),
+                            float(pr[p]['annotations'][n]['confidence'])])
+
+    pr_list = sorted(pr_list, key=lambda x: x[3], reverse=True)
+
+    # mAP 계산 변수 초기화
+    ap = 0
+    for c in class_mapping.values():
+        pr_list_t = [x for x in pr_list if x[1] == c]
+        gt_list_t = [x for x in gt_list if x[1] == c]
+        npos = len(gt_list_t)
+        tp = np.zeros(len(pr_list_t))
+        fp = np.zeros(len(pr_list_t))
+
+        det = Counter(cc[0] for cc in gt_list_t)
+        for key, val in det.items():
+            det[key] = np.zeros(val)
+
+        for i in range(len(pr_list_t)):
+            area_pr = pr_list_t[i][2][2] * pr_list_t[i][2][3]
+            gt = [gt for gt in gt_list_t if gt[0] == pr_list_t[i][0]]
+            iouMax = 0
+            jmax = 0
+            for j in range(len(gt)):
+                w_t = min(pr_list_t[i][2][0] + pr_list_t[i][2][2], gt[j][2][0] + gt[j][2][2]) - max(pr_list_t[i][2][0], gt[j][2][0])
+                h_t = min(pr_list_t[i][2][1] + pr_list_t[i][2][3], gt[j][2][1] + gt[j][2][3]) - max(pr_list_t[i][2][1], gt[j][2][1])
+                if w_t < 0 or h_t < 0:
+                    continue
+                area_u = w_t * h_t
+                area_gt = gt[j][2][2] * gt[j][2][3]
+                iou1 = area_u / (area_pr + area_gt - area_u)
+
+                if iou1 > iouMax:
+                    iouMax = iou1
+                    jmax = j
+                elif iou1 == iouMax:
+                    if det[pr_list_t[i][0]][jmax] == 1:
+                        jmax = j
+            if iouMax >= IOUThreshold:
+                if det[pr_list_t[i][0]][jmax] == 0:
+                    tp[i] = 1
+                    det[pr_list_t[i][0]][jmax] = 1
+                else:
+                    fp[i] = 1
+            else:
+                fp[i] = 1
+
+        acc_FP = np.cumsum(fp)
+        acc_TP = np.cumsum(tp)
+
+        rec = acc_TP / npos
+        prec = np.divide(acc_TP, (acc_FP + acc_TP))
+
+        mrec = [e for e in rec]
+        mpre = [e for e in prec]
+
+        recallValues = np.linspace(0, 1, 11)
+        recallValues = list(recallValues[::-1])
+        rhoInterp, recallValid = [], []
+
+        for r in recallValues:
+            argGreaterRecalls = np.argwhere(mrec[:] >= r)
+            pmax = 0
+            if argGreaterRecalls.size != 0:
+                pmax = max(mpre[argGreaterRecalls.min():])
+
+            recallValid.append(r)
+            rhoInterp.append(pmax)
+
+        ap += sum(rhoInterp) / 11
+
+    mAP = ap / len(class_mapping)   
+
+    print(f"모델: {args.onnx-file}, 소요 시간: {inference_time:.2f}초, mAP: {mAP:.4f}")
 
 if __name__ == '__main__':
     import argparse

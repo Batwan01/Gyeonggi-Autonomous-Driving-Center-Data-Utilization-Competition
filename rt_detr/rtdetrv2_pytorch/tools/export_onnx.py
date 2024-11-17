@@ -84,9 +84,9 @@ def main(args, ):
 if __name__ == '__main__':
     import argparse
     parser = argparse.ArgumentParser()
-    parser.add_argument('-c', '--config', type=str, default="./configs/rtdetrv2/rtdetrv2_r18vd_dsp_3x_coco.yml", help='모델 설정 파일 경로')
-    parser.add_argument('-r', '--resume', type=str, default="./final_weights/rtdetrv2_s_dsp_36.pth", help='모델 가중치 파일 경로')
-    parser.add_argument('--output_file', '-o', type=str, default='rtdetv2_s_dsp_36.onnx')
+    parser.add_argument('-c', '--config', type=str, default="./configs/rtdetrv2/rtdetrv2_r34vd_dsp_1x_coco.yml", help='모델 설정 파일 경로')
+    parser.add_argument('-r', '--resume', type=str, default="./final_weights/rtdetrv2_m_dsp_12.pth", help='모델 가중치 파일 경로')
+    parser.add_argument('--output_file', '-o', type=str, default='rtdetv2_m_dsp_12.onnx')
     parser.add_argument('--check',  action='store_true', default=False,)
     parser.add_argument('--simplify',  action='store_true', default=False,)
 

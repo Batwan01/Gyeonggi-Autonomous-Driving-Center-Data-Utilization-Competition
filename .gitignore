@@ -134,3 +134,5 @@ args.yaml
 *.cache
 tenserboard/
 tensorboard/
+*.deb
+*.onnx
