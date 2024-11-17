@@ -132,3 +132,5 @@ gyeonggi_AD_competition/
 *.out
 args.yaml
 *.json
+*.txt
+*.cache
