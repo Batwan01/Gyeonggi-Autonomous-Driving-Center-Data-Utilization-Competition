@@ -22,12 +22,6 @@ def inference(model, image_path, device):
     """
     RT-DETR 모델을 사용하여 추론
     """
-    model.eval()
-    transforms = T.Compose([
-        T.Resize((640, 640)),
-        T.ToTensor(),
-    ])
-
     im_pil = Image.open(image_path).convert('RGB')
     w, h = im_pil.size
     orig_size = torch.tensor([w, h])[None].to(device)
@@ -64,6 +58,12 @@ def main(args):
             return outputs
 
     model = Model().to(args.device)
+    model.eval()
+
+    transforms = T.Compose([
+        T.Resize((640, 640)),
+        T.ToTensor(),
+    ])
 
     # test 이미지 폴더에서 모든 파일 처리
     test_folder = args.test_folder
@@ -94,8 +94,6 @@ def main(args):
 
         # 각 객체에 대한 주석(annotation) 정보 추가
         for i, box in enumerate(boxes):
-            if scores[i].item() < args.confidence_threshold:
-                continue
 
             cls = int(labels[i].item()) + 1
             conf = scores[i].item()
@@ -139,7 +137,6 @@ if __name__ == '__main__':
     parser.add_argument('-t', '--test-folder', type=str, default="../../yolo/test", help='테스트 이미지 폴더 경로')
     parser.add_argument('-o', '--output-path', type=str, default='./results/rtdetr_s_dsp_72.pth', help='결과 저장 JSON 파일 경로')
     parser.add_argument('-d', '--device', type=str, default='cuda:0', help='사용할 디바이스 (예: cuda:0, cpu)')
-    parser.add_argument('--confidence-threshold', type=float, default=0.25, help='결과를 필터링할 confidence score 기준')
     args = parser.parse_args()
 
     main(args)

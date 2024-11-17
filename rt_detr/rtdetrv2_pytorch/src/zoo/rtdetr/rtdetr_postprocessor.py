@@ -60,6 +60,9 @@ class RTDETRPostProcessor(nn.Module):
             labels = mod(index, self.num_classes)
             index = index // self.num_classes
             boxes = bbox_pred.gather(dim=1, index=index.unsqueeze(-1).repeat(1, 1, bbox_pred.shape[-1]))
+
+            valid = scores > 0.25
+            scores, labels, boxes = scores[valid], labels[valid], boxes[valid]
             
         else:
             scores = F.softmax(logits)[:, :, :-1]
@@ -68,6 +71,9 @@ class RTDETRPostProcessor(nn.Module):
                 scores, index = torch.topk(scores, self.num_top_queries, dim=-1)
                 labels = torch.gather(labels, dim=1, index=index)
                 boxes = torch.gather(boxes, dim=1, index=index.unsqueeze(-1).tile(1, 1, boxes.shape[-1]))
+            
+            valid = scores > 0.25
+            scores, labels, boxes = scores[valid], labels[valid], boxes[valid]
         
         # TODO for onnx export
         if self.deploy_mode:
