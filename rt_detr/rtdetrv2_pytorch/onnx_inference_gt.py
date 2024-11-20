@@ -214,16 +214,16 @@ def main(args):
 
     mAP = ap / len(class_mapping)   
 
-    print(f"모델: {args.onnx-file}, 소요 시간: {inference_time:.2f}초, mAP: {mAP:.4f}")
+    print(f"모델: {args.onnx_file}, 소요 시간: {inference_time:.2f}초, mAP: {mAP:.4f}")
 
 if __name__ == '__main__':
     import argparse
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('-f', '--onnx-file', type=str, default="./final_onnxes/rtdetrv2_s_dsp_36.onnx", help='ONNX 모델 파일 경로')
-    parser.add_argument('-t', '--test-folder', type=str, default="../../dataset/test", help='테스트 이미지 폴더 경로')
-    parser.add_argument('-o', '--output-path', type=str, default='./json/rtdetrv2_s_dsp_36_onnx_2.json', help='결과 저장 JSON 파일 경로')
-     parser.add_argument('-g', '--gt_path', type=str, default=r"/root/evaluation/test_1730796030678.json", help='gt json 파일 경로')
+    parser.add_argument('-f', '--onnx_file', type=str, default="./final_onnxes/rtdetrv2_s_dsp_36.onnx", help='ONNX 모델 파일 경로')
+    parser.add_argument('-t', '--test_folder', type=str, default="../../dataset/test", help='테스트 이미지 폴더 경로')
+    parser.add_argument('-o', '--output_path', type=str, default='./json/rtdetrv2_s_dsp_36_onnx_2.json', help='결과 저장 JSON 파일 경로')
+    parser.add_argument('-g', '--gt_path', type=str, default=r"/root/evaluation/test_1730796030678.json", help='gt json 파일 경로')
     args = parser.parse_args()
 
     main(args)

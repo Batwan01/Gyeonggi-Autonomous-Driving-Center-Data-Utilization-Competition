@@ -24,7 +24,7 @@ def main(args):
     results_summary = []
 
     # 모델 파일들이 저장된 폴더와 test 데이터셋 input 경로, 결과 저장 폴더 설정
-    model_folder = r"../final_weights"
+    model_folder = args.weigths_path
     # 모델 파일 목록
     model_files = [f for f in os.listdir(model_folder) if f.endswith(".pt")]
 
@@ -36,7 +36,7 @@ def main(args):
         # 소요 시간 측정 시작
         start_time = time.time()
         # test 데이터셋 input 경로
-        test_folder = r"../../dataset/test"
+        test_folder = args.test_path
         model = YOLO(weight_path) # weights 경로
 
         # COCO 형식 JSON 구조 초기화
