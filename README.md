@@ -6,3 +6,7 @@
 ## 참고
 - train 31 ~ 14826
 - val 14827 ~ 16993
+
+## Data cleansing
+
+![스페셜_트럭_라벨혼동](https://github.com/user-attachments/assets/b5a799cc-0289-4b28-b274-542b9976f544)
